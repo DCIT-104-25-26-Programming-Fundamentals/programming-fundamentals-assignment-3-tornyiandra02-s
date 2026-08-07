@@ -84,4 +84,91 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+const readline = require('readline-sync');
 
+const students = [];
+
+function calculateAverageScore(scores) {
+  if (scores.length === 0) return 0;
+  const sum = scores.reduce((acc, curr) => acc + curr, 0);
+  return sum / scores.length;
+}
+
+function addStudent() {
+  const name = readline.question('Student name: ');
+  const id = Number(readline.question('Student ID: '));
+  const count = Number(readline.question('How many scores? '));
+  const scores = [];
+
+  for (let i = 1; i <= count; i++) {
+    const score = Number(readline.question(`Enter score ${i}: `));
+    scores.push(score);
+  }
+
+  students.push({ name, id, scores });
+  console.log(`Student "${name}" added successfully.`);
+}
+
+function displayAllStudents() {
+  if (students.length === 0) {
+    console.log('No students have been added yet.');
+    return;
+  }
+
+  const tableData = students.map((student) => ({
+    Name: student.name,
+    ID: student.id,
+    Scores: student.scores.join(', '),
+    'Average Score': calculateAverageScore(student.scores).toFixed(2)
+  }));
+
+  console.table(tableData);
+}
+
+function calculateStudentAverage() {
+  const idInput = Number(readline.question('Enter student ID: '));
+  const student = students.find((s) => s.id === idInput);
+
+  if (!student) {
+    console.log('Error: Student ID not found.');
+    return;
+  }
+
+  const avg = calculateAverageScore(student.scores);
+  console.log(`${student.name}'s average score: ${avg.toFixed(2)}`);
+}
+
+function startMenu() {
+  let running = true;
+
+  while (running) {
+    console.log('\n================================');
+    console.log('   STUDENT RECORD SYSTEM MENU');
+    console.log('================================');
+    console.log('1. Add student');
+    console.log('2. Display all students');
+    console.log('3. Calculate average score');
+    console.log('4. Quit');
+
+    const choice = readline.question('Enter your choice (1-4): ');
+
+    switch (choice) {
+      case '1':
+        addStudent();
+        break;
+      case '2':
+        displayAllStudents();
+        break;
+      case '3':
+        calculateStudentAverage();
+        break;
+      case '4':
+        running = false;
+        break;
+      default:
+        console.log('Invalid choice. Please select an option between 1 and 4.');
+    }
+  }
+}
+
+startMenu();
