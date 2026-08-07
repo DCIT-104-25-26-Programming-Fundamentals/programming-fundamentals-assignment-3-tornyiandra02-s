@@ -58,5 +58,44 @@
 // =============================================================================
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
+const readline = require('readline-sync');
 
+function printSingleTable(num) {
+    console.log(`Multiplication Table for ${num}:`);
+    for (let i = 1; i <= 12; i++) {
+        console.log(`${num}  x  ${i}  =  ${num * i}`);
+    }
+}
+
+function generateSingleTable() {
+    const input = readline.question('Enter a number: ');
+    const num = Number(input);
+
+    if (!Number.isInteger(num) || num <= 0) {
+        console.log('Error: Please enter a positive integer.');
+        return;
+    }
+
+    printSingleTable(num);
+}
+
+function generateMultipleTables() {
+    const input = readline.question('Enter a number N: ');
+    const n = Number(input);
+
+    if (!Number.isInteger(n) || n <= 0) {
+        console.log('Error: Please enter a positive integer.');
+        return;
+    }
+
+    for (let i = 1; i <= n; i++) {
+        printSingleTable(i);
+        if (i < n) {
+            console.log('---------------------------');
+        }
+    }
+}
+
+generateSingleTable();
+generateMultipleTables();
 
