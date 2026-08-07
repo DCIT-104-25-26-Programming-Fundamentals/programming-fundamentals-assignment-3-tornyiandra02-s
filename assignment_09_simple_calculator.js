@@ -74,4 +74,98 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+const readline = require('readline-sync');
 
+function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function divide(a, b) {
+    if (b === 0) {
+        return "Error: Cannot divide by zero.";
+    }
+    return a / b;
+}
+
+function modulus(a, b) {
+    if (b === 0) {
+        return "Error: Cannot divide by zero.";
+    }
+    return a % b;
+}
+
+function exponentiate(a, b) {
+    return a ** b;
+}
+
+while (true) {
+    console.log("============================");
+    console.log("     SIMPLE CALCULATOR     ");
+    console.log("============================");
+    console.log("1. Addition");
+    console.log("2. Subtraction");
+    console.log("3. Multiplication");
+    console.log("4. Division");
+    console.log("5. Modulus");
+    console.log("6. Exponentiation");
+    console.log("7. Quit");
+
+    let choice = readline.question("Select an operation (1-7): ");
+
+    if (choice === '7') {
+        console.log("Goodbye!");
+        break;
+    }
+
+    if (!['1', '2', '3', '4', '5', '6'].includes(choice)) {
+        console.log("Invalid option, please try again.\n");
+        continue;
+    }
+
+    let num1 = parseFloat(readline.question("Enter first number : "));
+    let num2 = parseFloat(readline.question("Enter second number: "));
+
+    if (isNaN(num1) || isNaN(num2)) {
+        console.log("Invalid input. Please enter valid numbers.\n");
+        continue;
+    }
+
+    let result;
+    let operator;
+
+    if (choice === '1') {
+        result = add(num1, num2);
+        operator = '+';
+    } else if (choice === '2') {
+        result = subtract(num1, num2);
+        operator = '-';
+    } else if (choice === '3') {
+        result = multiply(num1, num2);
+        operator = '*';
+    } else if (choice === '4') {
+        result = divide(num1, num2);
+        operator = '/';
+    } else if (choice === '5') {
+        result = modulus(num1, num2);
+        operator = '%';
+    } else if (choice === '6') {
+        result = exponentiate(num1, num2);
+        operator = '**';
+    }
+
+    if (typeof result === 'string') {
+        console.log(result);
+    } else {
+        console.log(`Result: ${num1} ${operator} ${num2} = ${result.toFixed(2)}`);
+    }
+    
+    console.log();
+}
