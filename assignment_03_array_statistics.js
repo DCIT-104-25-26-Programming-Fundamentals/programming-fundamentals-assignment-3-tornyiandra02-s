@@ -43,4 +43,73 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+const readline = require('readline-sync');
 
+function calculateSum(arr) {
+    let sum = 0;
+    for (let i = 0; i < arr.length; i++) {
+        sum += arr[i];
+    }
+    return sum;
+}
+
+function calculateAverage(arr) {
+    if (arr.length === 0) return 0;
+    return calculateSum(arr) / arr.length;
+}
+
+function findMaximum(arr) {
+    let max = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+function findMinimum(arr) {
+    let min = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] < min) {
+            min = arr[i];
+        }
+    }
+    return min;
+}
+
+function main() {
+    const countInput = readline.question('How many numbers? ');
+    const count = parseInt(countInput, 10);
+
+    if (isNaN(count) || count <= 0) {
+        console.log('Error: Please enter a positive integer greater than zero.');
+        return;
+    }
+
+    const numbers = [];
+    for (let i = 1; i <= count; i++) {
+        const numInput = readline.question(`Enter number ${i}: `);
+        const num = parseFloat(numInput);
+        
+        if (isNaN(num)) {
+            console.log('Error: Invalid number entered.');
+            return;
+        }
+        
+        numbers.push(num);
+    }
+
+    const sum = calculateSum(numbers);
+    const average = calculateAverage(numbers);
+    const max = findMaximum(numbers);
+    const min = findMinimum(numbers);
+
+    console.log('\nResults:');
+    console.log(`Sum:     ${sum}`);
+    console.log(`Average: ${average}`);
+    console.log(`Maximum: ${max}`);
+    console.log(`Minimum: ${min}`);
+}
+
+main();
