@@ -69,4 +69,87 @@
 // =============================================================================
 
 const readlineSync = require('readline-sync');
+function readMatrix(rows, cols) {
+  let matrix = [];
+  for (let i = 0; i < rows; i++) {
+    let input = readlineSync.question(`Enter row ${i + 1}: `);
+    let row = input.split(' ').map(Number);
+    matrix.push(row);
+  }
+  return matrix;
+}
+
+function printMatrix(matrix) {
+  for (let i = 0; i < matrix.length; i++) {
+    let rowStr = '';
+    for (let j = 0; j < matrix[i].length; j++) {
+      rowStr += matrix[i][j] + '\t';
+    }
+    console.log(rowStr);
+  }
+}
+
+function transposeMatrix(matrix) {
+  let result = [];
+  for (let j = 0; j < matrix[0].length; j++) {
+    let newRow = [];
+    for (let i = 0; i < matrix.length; i++) {
+      newRow.push(matrix[i][j]);
+    }
+    result.push(newRow);
+  }
+  return result;
+}
+
+function addMatrices(matrixA, matrixB) {
+  let result = [];
+  for (let i = 0; i < matrixA.length; i++) {
+    let row = [];
+    for (let j = 0; j < matrixA[0].length; j++) {
+      row.push(matrixA[i][j] + matrixB[i][j]);
+    }
+    result.push(row);
+  }
+  return result;
+}
+
+function multiplyMatrices(matrixA, matrixB) {
+  let result = [];
+  for (let i = 0; i < matrixA.length; i++) {
+    let row = [];
+    for (let j = 0; j < matrixB[0].length; j++) {
+      let sum = 0;
+      for (let k = 0; k < matrixA[0].length; k++) {
+        sum += matrixA[i][k] * matrixB[k][j];
+      }
+      row.push(sum);
+    }
+    result.push(row);
+  }
+  return result;
+}
+
+console.log('PART A');
+let rowsA = Number(readlineSync.question('Enter number of rows: '));
+let colsA = Number(readlineSync.question('Enter number of columns: '));
+let matrixA = readMatrix(rowsA, colsA);
+console.log('Transposed Matrix:');
+printMatrix(transposeMatrix(matrixA));
+
+console.log('PART B');
+let rowsB = Number(readlineSync.question('Enter number of rows: '));
+let colsB = Number(readlineSync.question('Enter number of columns: '));
+let addA = readMatrix(rowsB, colsB);
+let addB = readMatrix(rowsB, colsB);
+console.log('Sum:');
+printMatrix(addMatrices(addA, addB));
+
+console.log('PART C');
+let rowsM1 = Number(readlineSync.question('Enter rows for Matrix A: '));
+let colsM1 = Number(readlineSync.question('Enter cols for Matrix A / rows for Matrix B: '));
+let colsM2 = Number(readlineSync.question('Enter cols for Matrix B: '));
+let multA = readMatrix(rowsM1, colsM1);
+let multB = readMatrix(colsM1, colsM2);
+console.log('Product:');
+printMatrix(multiplyMatrices(multA, multB));
 
